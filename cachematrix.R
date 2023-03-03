@@ -3,14 +3,12 @@
 ## cache the value of an operation so that when we need it again, it can be looked up
 ## in the cache rather than recomputed
 
-rm(list=ls())
-
 ## The following function creates a special 'matrix' object that can cache its inverse
 
 makeCacheMatrix <- function(x = matrix()) {
   i <- NULL
-  set <- function(y) {
-    x <<- y
+  set <- function(x1) {
+    x <<- x1
     i <<- NULL
   }
   get <- function() x
@@ -25,16 +23,16 @@ makeCacheMatrix <- function(x = matrix()) {
 ## 'makeCacheMatrix' above. If the inverse has already been calculated (and the matrix
 ## has not changed), then 'cacheSolve' retrieves the inverse from the cache
 
-cacheSolve <- function(x, ...) {
-  i <- x$getInverse()
-  if(!is.null(i)) {
+cacheSolve <- function(y, ...) {
+  j <- y$getInverse()
+  if(!is.null(j)) {
     message("getting cached data")
-    return(i)
+    return(j)
   }
-  data <- x$get()
-  i <- solve(data, ...)
-  x$setInverse(i)
-  i
+  data <- y$get()
+  j <- solve(data, ...)
+  y$setInverse(j)
+  j
 }
 
 ## Demonstrate use of the functions
@@ -51,4 +49,3 @@ M$get()
 M$getInverse()
 cacheSolve(M)
 cacheSolve(M)
-
